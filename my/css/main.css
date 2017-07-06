@@ -1,0 +1,361 @@
+	*{
+		padding: 0px;
+		margin: 0px;
+	}
+	#head{
+		width: 100%;
+		height: 100px;
+		position: fixed;
+		z-index: 123;
+		background: #b42517;
+	}
+	
+	#head nav {
+		width: 1100px;
+		height: 120px;
+		margin: 0 auto;
+		background: #b42517;
+		border-radius:0 0 20% 20%;
+			
+	}
+	#head nav #logo{
+		width: 218px;
+		height: 96px;
+		float: left;
+		padding-left: 20px;
+	}
+	#head nav #logo img{
+		padding-top: 10px;
+	}
+	#head nav ul{
+		list-style: none;
+		float: left;
+		padding-left: 20px;
+		
+	}
+	#head nav ul li{
+		width: 120px;
+		height: 120px;
+		text-align: center;
+		font-size: 16px;
+		line-height: 120px;
+		float: left;
+		
+	}
+
+	#head nav ul li a{
+		display: block;
+		width: 100%;
+		height: 100%;
+		text-decoration: none;
+		color: white;
+		/* */
+	}
+.section { 
+	text-align: center; 
+	font: 50px "Microsoft Yahei"; 
+	color: #fff;
+  	}
+  	.section  .cons{
+  		width: 1366px;
+  		height: 768px;
+  		margin: 0 auto;
+  	}
+#dowebok .section .banner { position: relative; overflow:hidden; text-align: center;}
+#dowebok .section .banner ul { list-style: none; }
+#dowebok .section .banner ul li { float: left; }
+#dowebok .section #b04 { width: 1366px; height: 768px; }
+#dowebok .section #b04 ul li img{width: 1366px; height: 650px;}
+#dowebok .section #b04 .dots { position: absolute; left: 0; right: 0; bottom: 20px;}
+#dowebok .section #b04 .dots li 
+{ 
+	display: inline-block; 
+	width: 10px; 
+	height: 10px; 
+	margin: 0 4px; 
+	text-indent: -999em; 
+	border: 2px solid #fff; 
+	border-radius: 6px; 
+	cursor: pointer; 
+	opacity: .4; 
+	-webkit-transition: background .5s, opacity .5s; 
+	-moz-transition: background .5s, opacity .5s; 
+	transition: background .5s, opacity .5s;
+}
+#dowebok .section #b04 .dots li.active 
+{
+	background: red;
+	opacity: 1;
+}
+#dowebok .section #b04 .arrow { position: absolute; top: 200px;}
+#dowebok .section #b04 #al { left: 15px;}
+#dowebok .section #b04 #ar { right: 15px;}
+/* 每一页上左侧导航栏 */
+#dowebok .section .title{
+	width: 300px;
+	height: 440px;
+	background: url(../images/title_bg.png) no-repeat center center;
+	background-size: 300px 440px;
+	margin-top: 140px;
+	float: left;
+	
+}
+#dowebok .section .title h5{
+	line-height: 18px;
+	padding-top: 40px;
+	font-size: 14px;
+	color: yellow;
+}
+#dowebok .section .title ul{
+	padding-left: 55px;
+	list-style: none;
+	width: 180px;
+}
+#dowebok .section .title ul li{
+	width: 80px;
+	float: left;
+	text-align: center;
+	line-height: 24px;
+	padding-left: 10px;
+}
+#dowebok .section .title ul li:hover a{
+	font-weight: bold;
+	color: #edd80b;
+}
+#dowebok .section .title ul li a{
+	font-size: 12px;
+	color: #f7f3cc;
+	text-decoration: none;
+}
+
+#head #menu .active a { color: white; background: url(../images/logo_03.png) no-repeat center center;}
+#p2{
+	width: 1366px;
+	height: 768px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+#p2 #jShao{
+	width: 1000px;
+	height: 200px;
+	margin: 120px auto;
+	margin-bottom: 0px;
+}
+#p2 #jShao h2{
+	padding-top: 10px;
+	font-size: 24px;
+	color: #b42517;
+
+}
+
+#p2 #jShao p{
+	font-size: 16px;
+	text-indent: 2em;
+	text-align: left;
+}
+
+
+
+#content1{
+	width: 1000px;
+	height: 260px;
+	border: 2px solid  #b42517;
+	margin:20px auto;
+}
+#content1 ul{
+	list-style: none;
+	padding-left: 20px;
+	padding-top: 6px;
+}
+#content1 ul li {
+	width: 230px;
+	height: 240px;
+	float: left;
+	padding: 5px;
+}
+.example1{
+	width: 230px;
+	height: 240px;
+}
+.intro1{
+	background: rgba(255,0,0,0.7);
+}
+.intro1 h5{
+	font-size: 24px;
+	color: white;
+	line-height: 224px;
+}
+#zhanwei{
+	width: 100%;
+	height: 50px;
+
+}
+
+
+#screen span {
+
+		position:absolute;
+
+		overflow:hidden;
+
+		border:#FFF solid 1px;
+
+		background:#FFF;
+
+	}
+
+	#screen img{
+
+		position:absolute;
+
+		left:-32px;
+
+		top:-32px;
+
+		cursor: pointer;
+
+	}
+
+	#caption, #title{
+
+		color: #FFF;
+
+		font-family: georgia, 'times new roman', times, veronica, serif;
+
+		font-size: 1em;
+
+		text-align: center;
+
+	}
+
+	#caption b {
+
+		font-size: 2em;
+
+	}
+
+
+
+	#p6{
+		width: 1366px;
+		height: 768px;
+		margin: 0 auto;
+		overflow: hidden;
+	}
+	#p6 #er{
+		width: 280px;
+		height: 280px;
+		margin-top: 130px;
+		margin-left: 500px;
+		border: 1px solid #b42517;
+		border-box:box-sizing; 
+
+	}
+	#p6 #er img{
+		padding-top: 10px;
+	}
+	#p6 #content{
+		width: 1000px;
+		height: 200px;
+		position: absolute;
+		top: 430px;
+		left: 200px;
+	}
+    #p6 #content ul
+    {
+            width: 960px;
+            list-style: none;
+        }
+
+     #p6 #content ul li
+        {
+            margin-right: 20px;
+            width: 225px;
+            height: 180px;
+            float: left;
+        }
+
+     #p6 #content ul li:last-child
+        {
+            margin-right: 0;
+        }
+
+       #p6 #content ul li a
+        {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            /*舞台（动画元素的父容器）perspective*/
+            -webkit-perspective: 800px;
+            -moz-perspective: 800px;
+
+        }
+
+      #p6 #content ul li a > div
+        {
+            position: absolute;
+            left: 0;
+            height: 0;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            /*动画元素transform-style*/
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -webkit-transition: .8s ease-in-out ;
+            -moz-transition:  .8s ease-in-out ;
+            /*动画元素背后设置为hidden*/
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+        }
+
+      #p6 #content ul li a div:first-child
+        {
+            /*
+            绕y轴旋转
+            */
+            -webkit-transform: rotateY(0);
+            -moz-transform: rotateY(0);
+            z-index: 2;
+        }
+
+      #p6 #content ul li a div:last-child
+        {
+            background: url("images/bg.jpg") no-repeat 0 0;
+            -webkit-transform: rotateY(180deg);
+            -moz-transform: rotateY(180deg);
+            z-index: 1;
+        }
+
+      #p6 #content ul li a:hover div:first-child
+        {
+            -webkit-transform: rotateY(-180deg);
+            -moz-transform: rotateY(-180deg);
+        }
+
+       #p6 #content ul li a:hover div:last-child
+        {
+            -webkit-transform: rotateY(0);
+            -moz-transform: rotateY(0);
+        }
+
+       #p6 #content ul li a div h3
+        {
+            margin: 0 auto 15px;
+            padding: 15px 0;
+            width: 200px;
+            height: 16px;
+            line-height: 16px;
+            font-size: 18px;
+            text-align: center;
+            border-bottom: 1px #fff dashed;
+        }
+
+       #p6 #content ul li a div p
+        {
+            padding: 0 10px;
+            font-size: 12px;
+            text-indent: 2em;
+            line-height: 18px;
+        }

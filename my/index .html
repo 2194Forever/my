@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>食全食美</title>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<!-- fullpage 的js -->
+
+	<script src="js/jquery-1.8.3.min.js"></script>
+	<script src="js/jquery.fullPage.min.js"></script>
+	<!-- unslider 轮播插件的js -->
+	<script src="js/unslider.min.js"></script>
+	<!-- 菜系类别 随鼠标进入方向效果的插件 -->
+	<script type="text/javascript" src="js/sHover.min.js"></script>
+	<!--<script src="js/jquery.min.js"></script>-->
+
+
+	<!-- 手风琴效果 -->
+	<script type="text/javascript" src="js/jquery.gridAccordion.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/grid-accordion.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="css/grid-accordion-example1.css" media="screen"/>
+
+	
+	<!-- 翻页效果 -->
+	<link rel="stylesheet" type="text/css" href="css/book.css">
+	<script type="text/javascript" src="js/book.js"></script>
+
+	<!-- fullpage 全屏滚动的样式文件 -->
+	<link rel="stylesheet" href="css/jquery.fullPage.css">
+	<link rel="stylesheet" href="css/main.css">
+
+	<!-- jQuery手风琴带玻璃流光质感 -->
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<!-- 图片旋转效果样式 -->
+	<link rel="stylesheet" href="css/animate.css">
+
+	<!-- 第五页效果 js -->
+		<script type="text/javascript"><!--
+			window.onerror = new Function("return true");
+			var obj = [];
+			var scr;
+			var spa;
+			var img;
+			var W;
+			var Wi;
+			var Hi;
+			var wi;
+			var hi;
+			var Sx;
+			var Sy;
+			var M;
+			var xm;
+			var ym;
+			var xb = 0;
+			var yb = 0;
+			var ob =  - 1;
+			var cl = false;
+
+
+			/* needed in standard mode */
+
+			px = function(x)
+			{
+				return Math.round(x) + "px";
+			}
+
+
+
+			/* center image  - do not resize for perf. reason */
+			img_center = function(o)
+			{
+				with(img[o])
+				{
+					style.left = px( - (width - Wi) / 2);
+					style.top = px( - (height - Hi) / 2);
+				}
+			}
+
+
+
+			//////////////////////////////////////////////////////////
+
+			var Nx = 4; //size grid x
+			var Ny = 4; //size grid y
+			var Tx = 3; // image width
+			var Ty = 3; // image height
+			var Mg = 40; // margin
+			var SP = 1; // speed
+			//////////////////////////////////////////////////////////
+
+
+
+			function Cobj(o, x, y)
+			{
+				this.o = o;
+				this.ix = Math.min(Nx - Tx, Math.max(0, Math.round(x - (Tx / 2))));
+				this.iy = Math.min(Ny - Ty, Math.max(0, Math.round(y - (Ty / 2))));
+				this.li = ((this.ix * M + this.ix * Sx) - (x * M + x * Sx)) / SP;
+				this.ti = ((this.iy * M + this.iy * Sy) - (y * M + y * Sy)) / SP;
+				this.l = 0;
+				this.t = 0;
+				this.w = 0;
+				this.h = 0;
+				this.s = 0;
+				this.mv = false;
+				this.spa = spa[o].style;
+				this.img = img[o];
+				this.txt = img[o].alt;
+				img[o].alt = "";
+				/* zooming loop */
+
+				this.zoom = function()
+				{
+					with(this)
+					{
+						l += li * s;
+						t += ti * s;
+						w += wi * s;
+						h += hi * s;
+						if ((s > 0 && w < Wi) || (s < 0 && w > Sx))
+						{
+							/* force window.event */
+							window.focus();
+							/* loop */
+							setTimeout("obj[" + o + "].zoom()", 16);
+						}
+						else
+						{
+							/* finished */
+							mv = false;
+							/* set final position */
+							if (s > 0)
+							{
+								l = ix * M + ix * Sx;
+								t = iy * M + iy * Sy;
+								w = Wi;
+								h = Hi;
+							}
+							else
+							{
+								l = x * M + x * Sx;
+								t = y * M + y * Sy;
+								w = Sx;
+								h = Sy;
+							}
+						}
+
+						/* html animation */
+						with(spa)
+						{
+							left = px(l);
+							top = px(t);
+							width = px(w);
+							height = px(h);
+							zIndex = Math.round(w);
+						}
+					}
+				}
+
+				this.click = function()
+				{
+					with(this)
+					{
+						img_center(o);
+						/* zooming logic */
+						if ( ! mv || cl)
+						{
+							if (s > 0)
+							{
+								if (cl || Math.abs(xm - xb) > Sx * .4 || Math.abs(ym - yb) > Sy * .4)
+								{
+									s =  - 2;
+									mv = true;
+									zoom();
+									cap.innerHTML = txt;
+								}
+							}
+							else
+							{
+								if (cl || ob != o)
+								{
+									if (ob >= 0)
+									{
+										with(obj[ob])
+										{
+											s =  - 2;
+											mv = true;
+											zoom();
+										}
+									}
+									ob = o;
+									s = 1;
+									xb = xm;
+									yb = ym;
+									mv = true;
+									zoom();
+									cap.innerHTML = txt;
+								}
+							}
+						}
+
+					}
+
+				}
+
+				
+				/* hook up events */
+
+				img[o].onmouseover = img[o].onmousemove = img[o].onmouseout = new Function("cl=false;obj[" + o + "].click()");
+				img[o].onclick = new Function("cl=true;obj[" + o + "].click()");
+				img[o].onload = new Function("img_center(" + o + ")");
+
+				/* initial display */
+				this.zoom();
+			}
+
+
+
+			/* mouse */
+
+			document.onmousemove = function(e)
+			{
+				if ( ! e)
+				{
+					e = window.event;
+				}
+				xm = (e.x || e.clientX);
+				ym = (e.y || e.clientY);
+
+			}
+
+
+
+			/* init */
+
+			function load()
+			{
+				/* html elements */
+				scr = document.getElementById("screen");
+				spa = scr.getElementsByTagName("span");
+				img = scr.getElementsByTagName("img");
+				cap = document.getElementById("caption");
+
+				/* mouseover border */ 
+				document.getElementById("border").onmouseover = function()
+				{
+					cl = true;
+					if(ob >= 0 && obj[ob].s > 0) obj[ob].click();
+					ob = -1;
+				}
+
+				/* global variables */
+
+				W = parseInt(scr.style.width);
+				H = parseInt(scr.style.height);
+				M = W / Mg;
+				Sx = (W - (Nx - 1) * M) / Nx;
+				Sy = (H - (Ny - 1) * M) / Ny;
+				Wi = Tx * Sx + (Tx - 1) * M;
+				Hi = Ty * Sy + (Ty - 1) * M;
+				SP = M * Tx * SP;
+				wi = (Wi - Sx) / SP;
+				hi = (Hi - Sy) / SP;
+
+				/* create objects */
+
+				for (k = 0, i = 0; i < Nx; i ++)
+				{
+					for (j = 0; j < Ny; j ++)
+					{
+						obj[k] = new Cobj(k ++, i, j);
+					}
+				}
+			}
+
+			//-->
+
+	</script>
+
+
+</head>
+<body>
+<embed src="../music/洛天依-洛天依投食歌.mp3" hidden="true" autostart="true" loop="true"> 
+	<div id="head">
+		<nav>
+			<div id="logo">
+				<img src="images/logo2.png">
+			</div>
+			<ul id="menu">
+				<li data-menuanchor="page1" class="active"><a href="#page1">首页</a></li>
+				<li data-menuanchor="page2"><a href="#page2">关于美食</a></li>
+				<li data-menuanchor="page3"><a href="#page3">菜式菜品</a></li>
+				<li data-menuanchor="page4"><a href="#page4">菜谱大全</a></li>
+				<li data-menuanchor="page5"><a href="#page5">每日推荐</a></li>
+				<li data-menuanchor="page6"><a href="#page6">联系我们</a></li>
+
+			</ul>
+		</nav>
+	</div>
+	<div id="dowebok">
+	<!-- 	----------------------------第一页------------------------------ -->
+	<div class="section" name="page1">
+		<div class="banner" id="b04">
+		    <ul>
+		        <li><img src="images/banner_1.jpg" alt=""  ></li>
+		        <li><img src="images/banner_2.jpg" alt=""  ></li>
+		        <li><img src="images/banner_3.jpg" alt=""  ></li>
+		        <li><img src="images/banner_4.jpg" alt=""  ></li>
+		        <li><img src="images/banner_5.jpg" alt=""  ></li>
+		    </ul>
+	    	<a href="javascript:void(0);" class="unslider-arrow04 prev"><img class="arrow" id="al" src="images/arrowl.png" alt="	prev" width="20" height="35"></a>
+	    	<a href="javascript:void(0);" class="unslider-arrow04 next"><img class="arrow" id="ar" src="images/arrowr.png" alt="	next" width="20" height="37"></a>
+		</div>
+	</div>
+	<!-- 菜系类别 -->
+	<!-- 	----------------------------第二页------------------------------ -->
+	<div class="section" name="page2">
+		<div id="p2">
+		<div id="jShao">
+			<h2>关于美食</h2>
+			<p>豫菜特色是中扒（扒菜）、西水（水席）、南锅（锅鸡、锅鱼）、北面（面食、馅饭）。就烹饪技术来说，豫菜的特色是选料严谨、刀工精细、讲究制汤、质味适中。而河南菜的烹调方法，也有50余种。</p>
+			<p>扒、烧、炸、熘、爆、炒、炝别有特色。其中，扒菜更为独到，素有“扒菜不勾芡，汤汁自来黏”的美称。另外，河南爆菜时多用武火，热锅凉油，操作迅速，质地脆嫩，汁色乳白。</p>
+		</div>
+			<div id="content1">
+				<ul>
+					<li><div class="example1" style="background: url(images/c_1.jpg) no-repeat center center"><div class="intro1">
+						<h5>经典面食</h5>
+					</div></div></li>
+					<li><div class="example1" style="background: url(images/c_2.jpeg) no-repeat center center"><div class="intro1">
+						<h5>五大名羹</h5>
+					</div></div></li>
+					<li><div class="example1" style="background: url(images/c_3.jpg) no-repeat center center"><div class="intro1">
+						<h5>五大卤味</h5>
+					</div></div></li>
+					<li><div class="example1" style="background: url(images/c_4.jpg) no-repeat center center"><div class="intro1">
+						<h5>风味小吃</h5>
+					</div></div></li>
+					
+				</ul>
+			</div>
+			
+		</div>
+		
+	</div>
+<!-- 	----------------------------第三页------------------------------ -->
+	<div class="section" name="page3">
+		<div class="title">
+			<h5>菜式菜品</h5>
+			<ul>
+				<li><a href="#">家常菜</a></li>
+				<li><a href="#">下饭菜</a></li>
+				<li><a href="#">私房菜</a></li>
+				<li><a href="#">下酒菜</a></li>
+				<li><a href="#">面食</a></li>
+				<li><a href="#">汤</a></li>
+				<li><a href="#">凉菜</a></li>
+				<li><a href="#">热菜</a></li>
+				<li><a href="#">素菜</a></li>
+				<li><a href="#">炒饭</a></li>
+				<li><a href="#">海鲜</a></li>
+				<li><a href="#">药膳</a></li>
+				<li><a href="#">糕点</a></li>
+				<li><a href="#">小吃</a></li>
+			</ul> 
+		</div>
+		<ul class="accordion" style="margin-top:120px">
+			<li><img src="images/1.jpg" alt=""/><div class="caption">家常菜</div></li>
+			<li><img src="images/2.jpg" alt=""/></li>
+			<li><img src="images/3.jpg" alt=""/></li>
+			<li><img src="images/4.jpg" alt=""/></li>
+			<li><img src="images/5.jpg" alt=""/><div class="caption"><u></u><br/><br/><ul><li></li>
+			<li>second item</li><li>third item</li></ul></div></li>
+			<li><img src="images/6.jpg" alt=""/></li>
+			<li><img src="images/7.jpg" alt=""/></li>
+			<li><img src="images/8.jpg" alt=""/><div class="caption"></div></li>
+			<li><img src="images/9.jpg" alt=""/><div class="caption"> <b></b> <a href="#"></a>  <input type="button" value="Buttons"/></div></li>
+
+			<li><img src="images/10.jpg" alt=""/></li>
+			<li><img src="images/11.jpg" alt=""/></li>
+			<li><img src="images/12.jpg" alt=""/><div class="caption"><u></u><br/><br/><ul><li></li><li></li><li></li></ul></div></li>
+
+			<li><img src="images/13.jpg" alt=""/></li>
+			<li><img src="images/14.jpg" alt=""/></li>
+			<li><img src="images/15.jpg" alt=""/><div class="caption"><b></b><a href="#"></a></div></li>
+			<li><img src="images/16.jpg" alt=""/></li>
+			<li><img src="images/17.jpg" alt=""/>
+			<div class="caption"><u></u><br/><br/><ul><li></li><li></li><li>t</li></ul></div></li>
+			<li><img src="images/18.jpg" alt=""/>                </li>
+			<li><img src="images/19.jpg" alt=""/><div class="caption"> <b>HTML</b></div></li>
+			<li><img src="images/20.jpg" alt=""/></li>
+		</ul>
+
+	</div>
+	
+	<!-- 	----------------------------第四页------------------------------ -->
+	<div class="section" name="page4">
+	<section id="knowledge" class="viewBlock">
+			<div class="bookBox">
+				<a class="lastBtn"><</a>
+				<a class="nextBtn">></a>
+				<div class="bookPage frist">
+				<h5>目录</h5>
+					<ul id="list">
+						<li><a href="#">猪肉类-----------------------------------------15</a></li>
+						<li><a href="#">牛肉类-----------------------------------------30</a></li>
+						<li><a href="#">鸡肉类-----------------------------------------45</a></li>
+						<li><a href="#">鱼肉类-----------------------------------------75</a></li>
+						<li><a href="#">其他肉类---------------------------------------84</a></li>
+						<li><a href="#">奶制品-----------------------------------------98</a></li>
+						<li><a href="#">蛋类-------------------------------------------115</a></li>
+						<li><a href="#">贝类-------------------------------------------142</a></li>
+						<li><a href="#">其他海鲜类------------------------------------158</a></li>
+						<li><a href="#">米面粉-----------------------------------------163</a></li>
+						<li><a href="#">茎叶蔬菜---------------------------------------187</a></li>
+						<li><a href="#">瓜果蔬菜---------------------------------------210</a></li>
+						<li><a href="#">豆制品-----------------------------------------235</a></li>
+						<li><a href="#">干果豆类---------------------------------------251</a></li>
+						<li><a href="#">菌菜-------------------------------------------262</a></li>
+						<li><a href="#">水果-------------------------------------------280</a></li>
+						<li><a href="#">口味-------------------------------------------294</a></li>
+						<li><a href="#">蟹类-------------------------------------------303</a></li>
+						<li><a href="#">菜系-------------------------------------------321</a></li>
+						<li><a href="#">虾类-------------------------------------------345</a></li>
+					</ul>
+				</div>
+
+				<div class="bookPage runPage">
+					<div class="bookWord">
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;红烧肉</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.0分 46位评价 
+						<span class="pageNumber">1</span>
+					</div>
+					<img src="images/cp1.jpg" />
+					<div id="content">
+						<h5>做法</h5>
+						<p>
+							食材：主料：带皮五花肉   400g<br>
+							步骤：<br>
+							1.带皮五花肉洗干净放人沸水锅中汆水片刻捞出（这样便于切块）;<br>
+							2.切成大小适中的块状，再次放入沸水锅中汆去血水，捞出沥干水分;<br>
+							<a href="#">查看全部</a>
+						</p>
+					</div>	
+				</div>
+
+				<div class="bookPage runPage">
+					<div class="bookWord">				
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;虎皮青椒</span> 4.6分 32位评价 
+						<span class="pageNumber">2</span>
+					</div>
+					<img src="images/14.jpg" />
+				</div>
+
+				<div class="bookPage runPage">
+					<div class="bookWord">
+						<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;小笼包</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.6分 21位评价 
+						<span class="pageNumber">3</span>
+					</div>
+					<img src="images/15.jpg" />
+				</div>
+
+				<div class="bookPage last">
+					<div class="bookWord">
+						<span>Ocean</span>nts for only 2%.</span>
+						<span class="pageNumber">4</span>
+					</div>
+					<img src="images/16.jpg" />
+				</div>
+			</div>
+		</section>
+
+
+		
+	</div>
+	<!-- 	----------------------------第五页------------------------------ -->
+
+	<div class="section" name="page5">
+		<div style="position: absolute; left: 50%; top: 50%;">
+		<div id="title" style="position: absolute; width: 440px; height: 40px; left: -220px; top: -200px;"></div>
+		<div id="border" style="border: 1px solid white; background: rgb(180, 37, 23) none repeat scroll 0%; position: absolute; width: 1000px; height: 500px; left: -500px; top: -190px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"></div>
+
+		<div id="screen" style="background: rgb(180, 37, 23) none repeat scroll 0%; position: absolute; width:960px; height: 450px; left: -480px; top: -165px; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+
+			<span style="left: 0px; top: 0px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj1.jpg" alt=""></span>
+			<span style="left: 0px; top: 78px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -8px;" src="images/tj2.jpg" alt=""></span>
+			<span style="left: 0px; top: 155px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj3.jpg" alt=""></span>
+			<span style="left: 0px; top: 233px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj4.jpg" alt=""></span>
+			<span style="left: 103px; top: 0px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj5.jpg" alt=""></span>
+			<span style="left: 103px; top: 78px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj6.jpg" alt=""></span>
+			<span style="left: 103px; top: 155px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj7.jpg" alt=""></span>
+			<span style="left: 103px; top: 233px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj8.jpg" alt=""></span>
+			<span style="left: 205px; top: 0px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj9.jpg" alt=""></span>
+			<span style="left: 205px; top: 78px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj10.jpg" alt=""></span>
+			<span style="left: 205px; top: 155px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj11.jpg" alt=""></span>
+			<span style="left: 205px; top: 233px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj12.jpg" alt=""></span>
+			<span style="left: 308px; top: 0px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj13.jpg" alt=""></span>
+			<span style="left: 308px; top: 78px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj14.jpg" alt=""></span>
+			<span style="left: 308px; top: 155px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj15.jpg" alt=""></span>
+			<span style="left: 308px; top: 233px; width: 93px; height: 68px; z-index: 93;"><img style="left: -11px; top: -9px;" src="images/tj16.jpg" alt=""></span>
+		</div>
+		<div id="caption" style="position: absolute; width: 440px; height: 60px; left: -220px; top: 175px;"><b>carefully</b> weight the options</div>
+
+		</div>
+	</div>
+
+
+<!-- 	----------------------------第六页------------------------------ -->
+	<div class="section" name="page6">
+		<div id="p6">
+		<div id="er">
+			<img src="images/l_3.png" width="260px" height="260px">
+		</div>
+			<div id="content">
+			    <ul>
+			        <li>
+			            <a href="#" >
+			                <div><img alt="" src="images/l1.png"/></div>
+			                <div>
+			                    <h3>热线</h3>
+
+			                    <p></p>
+			                </div>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="#" >
+			                <div>
+			                    <img alt="" src="images/l2.png"/>
+			                </div>
+			                <div>
+			                    <h3>电话</h3>
+
+			                    <p></p>
+			                </div>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="#" >
+			                <div><img alt="" src="images/l4.png"/></div>
+			                <div>
+			                    <h3>邮箱</h3>
+
+			                    <p></p>
+			                </div>
+			            </a>
+			        </li>
+			        <li>
+			            <a href="#" >
+			                <div>
+			                    <img alt="" src="images/l5.png"/>
+			                </div>
+			                <div>
+			                    <h3>地址</h3>
+
+			                    <p></p>
+			                </div>
+			            </a>
+			        </li>
+			    </ul>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
+
+<script>
+	$(function(){
+		/*全屏滚动*/
+	$('#dowebok').fullpage({
+		sectionsColor: ['#ffff99','#ffff99','#ffff99','#ffff99','#ffff99','#ffff99','#ffff99'],
+		'loopBottom':true,
+		anchors: ['page1', 'page2', 'page3', 'page4','page5','page6','page7'],
+		menu: '#menu',
+
+	});
+	/*轮播*/
+	var unslider04 = $('#b04').unslider({
+		dots: true
+	});
+	data04 = unslider04.data('unslider');
+	$('.unslider-arrow04').click(function() {
+        var fn = this.className.split(' ')[1];
+        data04[fn]();
+
+    });
+
+	/*图片旋转效果*/
+    var $animate = $('#animate');
+	var $opposite = $('#opposite');
+	$(".wrap").hover(function(){
+		$animate.removeClass();
+		$opposite.removeClass();
+		$animate.addClass("test");
+		$opposite.addClass('test2');
+	},function(){
+		$animate.removeClass();
+		$opposite.removeClass();
+		$animate.addClass("test2");
+		$opposite.addClass('test');
+	});
+
+	$(".well-item").hover(function(){
+		$(this).find(".correct").children().removeClass();
+		$(this).find(".opposite").children().removeClass();
+		$(this).find(".correct").children().addClass("test");
+		$(this).find(".opposite").children().addClass('test2');
+	},function(){
+		$(this).find(".correct").children().removeClass();
+		$(this).find(".opposite").children().removeClass();
+		$(this).find(".correct").children().addClass("test2");
+		$(this).find(".opposite").children().addClass('test');
+	});
+
+});
+</script>
+
+<!-- 菜系类别特效 -->
+<script type="text/javascript">
+	var example1=new sHover("example1","intro1");
+	example1.set({
+		speed:7,
+		opacity:80,						
+		opacityChange:true
+	});
+</script>
+
+<!-- jQuery手风琴带玻璃流光质感 -->
+<script>
+var Expand = function () {
+	var tile = $('.strips__strip');
+	var tileLink = $('.strips__strip > .strip__content');
+	var tileText = tileLink.find('.strip__inner-text');
+	var stripClose = $('.strip__close');
+	var expanded = false;
+	var open = function () {
+		var tile = $(this).parent();
+		if (!expanded) {
+			tile.addClass('strips__strip--expanded');
+			tileText.css('transition', 'all .6s 1s cubic-bezier(0.23, 1, 0.32, 1)');
+			stripClose.addClass('strip__close--show');
+			stripClose.css('transition', 'all .6s 1s cubic-bezier(0.23, 1, 0.32, 1)');
+			expanded = true;
+		}
+	};
+	var close = function () {
+		if (expanded) {
+			tile.removeClass('strips__strip--expanded');
+			tileText.css('transition', 'all 0.15s 0 cubic-bezier(0.23, 1, 0.32, 1)');
+			stripClose.removeClass('strip__close--show');
+			stripClose.css('transition', 'all 0.2s 0s cubic-bezier(0.23, 1, 0.32, 1)');
+			expanded = false;
+		}
+	};
+	var bindActions = function () {
+		tileLink.on('click', open);
+		stripClose.on('click', close);
+	};
+	var init = function () {
+		bindActions();
+	};
+	return { init: init };
+}();
+Expand.init();
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+$('.accordion').gridAccordion({width:1000, 
+height:500, 
+columns:5, 
+distance:2, 
+closedPanelWidth:10, 
+closedPanelHeight:10, 
+alignType:'centerCenter',
+slideshow:true,
+panelProperties:{
+0:{captionWidth:200, captionHeight:35, captionTop:30, captionLeft:30},
+4:{captionWidth:150, captionHeight:100, captionTop:30, captionLeft:650},
+7:{captionWidth:310, captionHeight:35, captionTop:350, captionLeft:40},
+8:{captionWidth:300, captionHeight:40, captionTop:150, captionLeft:35},
+11:{captionWidth:150, captionHeight:120, captionTop:300, captionLeft:30},
+14:{captionWidth:300, captionHeight:40, captionTop:30, captionLeft:50},
+16:{captionWidth:150, captionHeight:120, captionTop:150, captionLeft:10},
+18:{captionWidth:300, captionHeight:40, captionTop:130, captionLeft:50}
+
+}});
+
+});
+
+</script>
+
+<script type="text/javascript">
+	// starter
+	load();
+	//-->
+</script>
